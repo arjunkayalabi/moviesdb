@@ -8,6 +8,7 @@ node_modules/
 # testing
 coverage
 *Tests.js
+*.test.js
 test_*.py
 
 # production
