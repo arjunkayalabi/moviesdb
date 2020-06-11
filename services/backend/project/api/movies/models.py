@@ -1,7 +1,7 @@
 from sqlalchemy.sql import func
 from flask_admin.contrib.sqla import ModelView
 
-from . import db, admin
+from project import db, admin
 
 
 class Movies(db.Model):

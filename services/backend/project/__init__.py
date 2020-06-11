@@ -27,7 +27,7 @@ def create_app():
     migrate.init_app(app, db)
 
     # Register Blueprints
-    from .views import main
+    from project.api.movies.views import main
     app.register_blueprint(main)
 
     # Shell context for flask cli
