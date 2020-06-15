@@ -1,0 +1,24 @@
+# pull official base image
+FROM node:13.12.0-alpine as builder
+
+# set working directory
+WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+ENV REACT_APP_USERS_SERVICE_URL=http://localhost:5001
+
+# install app dependencies
+COPY package.json ./
+RUN yarn install
+RUN yarn add react-scripts@3.4.0 -g
+
+# add app
+COPY . ./
+RUN yarn run build
+
+# production environment
+FROM nginx:stable-alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

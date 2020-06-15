@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  sample:
+    container_name: react-beta01
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - "REACT_APP_USERS_SERVICE_URL=http://localhost:5001"
+
+    ports:
+      - 3002:3000
