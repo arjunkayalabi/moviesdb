@@ -1,10 +1,31 @@
 version: "3.7"
 
 services:
-  frontend:
+  api:
+    build:
+      context: ./services/backend/
+      dockerfile: ./Dockerfile.prod
+
+    env_file:
+      - ./services/backend/.env.prod
+    command: gunicorn --bind 0.0.0.0:5000 manage:app # python -m flask run -h 0.0.0.0
+    ports:
+      - 5001:5000
+
+  web:
     container_name: react-app
     build:
       context: ./services/frontend
-      dockerfile: ./services/frontend/Dockerfile.dev
+      dockerfile: Dockerfile.prod
+    env_file:
+      - ./services/frontend/.env.prod
+
     ports:
-      - "8080:80"
+      - "80:80"
+    stdin_open: true
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - "REACT_APP_USERS_SERVICE_URL=http://localhost:5001"
+    depends_on:
+      - api
