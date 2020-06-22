@@ -1,3 +1,4 @@
+from os import getenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -16,8 +17,9 @@ def create_app():
     app = Flask(__name__)
 
     # Set config
-    app.config['SECRET_KEY'] = 'determination'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movies.db'
+    app.config['SECRET_KEY'] = getenv('SKEY')
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movies.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = getenv('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Setup extensions

@@ -19,7 +19,7 @@ def recreate_db():
 def seed_db():
     db.session.add(Movies(title="Iron Man", rating=5))
     db.session.add(Movies(title="Exmachina", rating=4))
-    db.sess.commit()
+    db.session.commit()
 
 
 if __name__ == '__main__':
